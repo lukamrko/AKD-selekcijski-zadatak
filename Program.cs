@@ -1,4 +1,6 @@
-﻿namespace CSV_Obrada
+﻿using System.Globalization;
+
+namespace CSV_Obrada
 {
     class Program
     {
@@ -46,6 +48,7 @@
                     reader.ReadLine();
                 }
                 string line;
+                var culture = new CultureInfo("hr-HR");
                 while ((line = reader.ReadLine()) != null)
                 {
                     var lineValues = line.Split(csvSeparator);
@@ -60,7 +63,7 @@
                     var birthDate = DateTime.Now;
                     try
                     {
-                        birthDate = DateTime.Parse(lineValues[2]);
+                        birthDate = DateTime.Parse(lineValues[2], culture);
                     }
                     catch (Exception)
                     {

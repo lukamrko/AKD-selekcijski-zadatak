@@ -37,7 +37,7 @@
 
             using (var reader = new StreamReader(csvFilePath))
             {
-                if (containsHeader) 
+                if (containsHeader)
                 {
                     reader.ReadLine();
                 }
@@ -45,19 +45,29 @@
                 while ((line = reader.ReadLine()) != null)
                 {
                     var lineValues = line.Split(csvSeparator);
-
-                    var firstName = lineValues[0].ToUpper();
-                    var lastName = lineValues[1].ToUpper();
-                    var birthDate = DateTime.Parse(lineValues[2]);
-
-                    var userData = new UserData
+                    if (lineValues.Length != 3)
                     {
-                        Name = firstName,
-                        Surname = lastName,
-                        BirthDate = birthDate,
-                    };
+                        throw new Exception($"An improper number of arguments at line: {line}");
+                    }
 
-                    usersData.Add(userData);
+                    try
+                    {
+                        var firstName = lineValues[0].ToUpper();
+                        var lastName = lineValues[1].ToUpper();
+                        var birthDate = DateTime.Parse(lineValues[2]);
+                        var userData = new UserData
+                        {
+                            Name = firstName,
+                            Surname = lastName,
+                            BirthDate = birthDate,
+                        };
+
+                        usersData.Add(userData);
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine($"An error occured while converting values at line:{line}");
+                    }
                 }
             }
             return usersData;

@@ -21,7 +21,7 @@ The project was built with a focus on **code readability** and **expandability**
 
 ## Technologies Used
 - **C#**
-- **.NET 6.0**
+- **.NET 8.0**
 - **Microsoft.Extensions.Configuration** for loading configurations from a JSON file.
 
 ## How to Run

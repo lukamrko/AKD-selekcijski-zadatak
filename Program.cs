@@ -9,7 +9,11 @@
 
             var usersData = GetUsersData(csvFilePath, csvSeparator);
 
-            string newFilePath = GetNewFilePath(csvFilePath);
+            var newFilePath = csvFilePath;
+            do
+            {
+                newFilePath = GetNewFilePath(newFilePath);
+            } while (File.Exists(newFilePath));
 
             var modifiedLines = GetNewModifiedLines(csvSeparator, usersData);
 
@@ -47,29 +51,32 @@
                     var lineValues = line.Split(csvSeparator);
                     if (lineValues.Length != 3)
                     {
-                        throw new Exception($"An improper number of arguments at line: {line}");
+                        Console.WriteLine($"Skiping line becuase of inproper number of arguments: {line}");
+                        continue;
                     }
-
+                    
+                    var firstName = lineValues[0].Trim();
+                    var lastName = lineValues[1].Trim();
+                    var birthDate = DateTime.Now;
                     try
                     {
-                        var firstName = lineValues[0].ToUpper();
-                        var lastName = lineValues[1].ToUpper();
-                        var birthDate = DateTime.Parse(lineValues[2]);
-                        var userData = new UserData
-                        {
-                            Name = firstName,
-                            Surname = lastName,
-                            BirthDate = birthDate,
-                        };
-
-                        usersData.Add(userData);
+                        birthDate = DateTime.Parse(lineValues[2]);
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine($"An error occured while converting values at line:{line}");
+                        Console.WriteLine($"Skipping the line because an error occured while converting date {lineValues[2]} at line:{line}");
                     }
+                    var userData = new UserData
+                    {
+                        Name = firstName,
+                        Surname = lastName,
+                        BirthDate = birthDate,
+                    };
+
+                    usersData.Add(userData);
                 }
             }
+
             return usersData;
         }
 
@@ -101,7 +108,7 @@
         {
             try
             {
-                using (StreamWriter writer = new StreamWriter(newFilePath))
+                using (var writer = new StreamWriter(newFilePath))
                 {
                     foreach (var line in modifiedLines)
                     {

@@ -30,8 +30,10 @@ namespace CSV_Obrada
 
         private static IConfigurationRoot LoadConfiguration()
         {
+            var projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName; // Adjust based on folder structure
+
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(projectRoot)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
             return builder.Build();

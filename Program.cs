@@ -111,6 +111,7 @@ namespace CSV_Obrada
         {
             try
             {
+                Console.WriteLine();
                 using (var writer = new StreamWriter(newFilePath))
                 {
                     foreach (var line in modifiedLines)
@@ -119,7 +120,7 @@ namespace CSV_Obrada
                         writer.WriteLine(line);
                     }
                 }
-                Console.WriteLine($"File saved successfully at: {newFilePath}");
+                Console.WriteLine($"\nFile saved successfully at: {newFilePath}");
             }
             catch (Exception ex)
             {

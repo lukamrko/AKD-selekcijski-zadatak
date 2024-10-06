@@ -30,8 +30,6 @@ namespace CSV_Obrada
             sb.Append($"{csvSeparator} ");
 
             sb.Append(StringToHex(birthDateText));
-            sb.Append($"{csvSeparator} ");
-
             return sb.ToString();
         }
 

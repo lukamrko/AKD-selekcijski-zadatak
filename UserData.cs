@@ -1,43 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace CSV_Obrada
 {
     public class UserData
     {
-        private const char _CSVseparator = ',';
-        private const string _birthDateFormat = "dd-MM-yyyy";
-
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Surname { get; set; } = string.Empty;
         public DateTime BirthDate { get; set; }
 
-        public string ToCsvLine()
+        public string ToCsvLine(char csvSeparator, string birthDateFormat)
         {
             var sb = new StringBuilder();
             var bigName = Name.ToUpper();
             sb.Append(bigName);
-            sb.Append($"{_CSVseparator} ");
+            sb.Append($"{csvSeparator} ");
 
             var bigSurname = Surname.ToUpper();
             sb.Append(bigSurname);
-            sb.Append($"{_CSVseparator} ");
+            sb.Append($"{csvSeparator} ");
 
-            var birthDateText = BirthDate.ToString(_birthDateFormat);
+            var birthDateText = BirthDate.ToString(birthDateFormat);
             sb.Append(birthDateText);
-            sb.Append($"{_CSVseparator} ");
+            sb.Append($"{csvSeparator} ");
 
             sb.Append(StringToHex(bigName));
-            sb.Append($"{_CSVseparator} ");
+            sb.Append($"{csvSeparator} ");
 
             sb.Append(StringToHex(bigSurname));
-            sb.Append($"{_CSVseparator} ");
+            sb.Append($"{csvSeparator} ");
 
             sb.Append(StringToHex(birthDateText));
-            sb.Append($"{_CSVseparator} ");
+            sb.Append($"{csvSeparator} ");
 
             return sb.ToString();
         }

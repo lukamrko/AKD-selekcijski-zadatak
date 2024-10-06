@@ -37,12 +37,7 @@ namespace CSV_Obrada
 
         private string StringToHex(string input)
         {
-            var hexBuilder = new StringBuilder();
-            foreach (char c in input)
-            {
-                hexBuilder.AppendFormat("{0:X2}", (int)c);
-            }
-            return hexBuilder.ToString();
+            return string.Concat(input.Select(c => ((int)c).ToString("X2")));
         }
 
     }

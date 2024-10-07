@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Reflection;
+using Microsoft.Extensions.Configuration;
 
 namespace CSV_Obrada
 {
@@ -30,10 +31,13 @@ namespace CSV_Obrada
 
         private static IConfigurationRoot LoadConfiguration()
         {
-            var projectRoot = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName; // Adjust based on folder structure
+            var assemblyPath = Assembly.GetExecutingAssembly().Location;
+
+            // Go up to the project directory
+            var projectDirectory = Directory.GetParent(assemblyPath).Parent.Parent.Parent.FullName;
 
             var builder = new ConfigurationBuilder()
-                .SetBasePath(projectRoot)
+                .SetBasePath(projectDirectory)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
             return builder.Build();
